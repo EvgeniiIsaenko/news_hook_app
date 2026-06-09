@@ -1,0 +1,47 @@
+﻿@model HomeEventVM
+
+@{
+    ViewData["Title"] = "Event";
+}
+
+<style>
+    .hevent-date {
+        background-color: red;
+        display: inline-block;
+        border-radius: 5px;
+        width: fit-content;
+        padding: 3px;
+        font-size: 1.2em;
+        margin-bottom: 3px;
+    }
+</style>
+
+<div class="container mt-4" style="color: white">
+    @if (Model.Event == null)
+    {
+        <div class="alert alert-danger" role="alert" style="font-size: 1.2em;">
+            Event not found.
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-6 col-md-8 mx-auto text-center">
+            <div class="hevent-name mb-3">
+                <h1 style="font-size: 2em;">@Model.Event.Name</h1>
+            </div>
+            <div class="hevent-img mb-3">
+                <img src="@Model.Event.ImgPath" alt="Event Image" class="img-fluid" />
+            </div>
+            <div class="hevent-desc mb-3" style="font-size: 1.5em;">
+                <h1>Описание</h1>
+                <p>@Model.Event.Description</p>
+            </div>
+            <p  class="hevent-date"> @Model.Event.DateTime.ToShortDateString()</p>
+            
+            <div class="hevent-text mb-3">
+                <h3>О мероприятии</h3>
+                @Html.Raw(@Model.Event.Text)
+            </div>
+        </div>
+    }
+
