@@ -1,0 +1,64 @@
+﻿@model IEnumerable<News>
+@{
+    ViewData["Title"] = "News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .news-container {
+        margin-left: 75px;
+    }
+
+    .news {
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 50px;
+        border-color: rgba(0, 0, 0, 1);
+        position: relative;
+    }
+
+        .news img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+    .news-date {
+        background-color: rgba(255, 0, 0);
+        border-radius: 5px; 
+        width: fit-content; 
+        padding: 3px; 
+        margin-bottom: 3px;
+        font-size: 16px;
+    }
+
+    .news-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: white;
+    }
+
+</style>
+
+<h2 style="margin-left: 75px; color: white">Последние новости</h2>
+
+@foreach (var news in Model)
+{
+    <div class="col-md-7 news-container" style="color: white">
+        <div class="news">
+            @if (!string.IsNullOrEmpty(news.ImgPath))
+            {
+                <img src="@news.ImgPath" alt="News Image" />
+            }
+            <h3>@news.Name</h3>
+            <p class="news-date">@news.PublicationTime.ToShortDateString()</p>
+            <p>@news.Description</p>
+            <div class="news-line"></div>
+        </div>
+    </div>
+}
+
+

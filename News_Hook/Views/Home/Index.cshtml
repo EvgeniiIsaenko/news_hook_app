@@ -1,0 +1,86 @@
+﻿@model HomeIndexVM
+@{
+    ViewData["Title"] = "Главная страница";
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            @if (Model.News != null && Model.News.Any())
+            {
+                <div class="row-news">
+                    <h3 style="margin-bottom:18px; color: white;">
+                        Новости
+                    </h3>
+                    @foreach (var news in Model.News.Take(3))
+                    {
+                        <div class="news-card" style="color: white">
+                            <div class="news-date" style="background-color: red; border-radius: 5px; width: fit-content; padding: 3px; margin-bottom: 3px">@news.PublicationTime.ToShortDateString()</div>
+                            <div class="news-img-container">
+                                <img src="@news.ImgPath" alt="@news.Id" style="max-width:99%">
+                            </div>
+                            <h5 class="news-name">@news.Name</h5>
+                            <p class="news-description">@news.Description</p>
+                            @if (Context.Session.GetString("Login") is not null)
+                            {
+                                <div>
+                                    <a asp-controller="constructor" asp-action="news" asp-route-id="@news.Id" class="btn btn-primary bi bi-pencil-square" style="background-color: red; color: white; border-color: white"></a>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="all-news">
+                        <a href="home/news">Все новости</a>
+                    </div>
+                </div>
+            }
+            else
+            {
+            <h3 style="color: white;">
+                Нет новостей
+            </h3>
+            }
+        </div>
+        <div class="col-md-7">
+            <h3 style="margin-bottom:18px; margin-top:18px; color: white">
+                Мероприятия
+            </h3>
+            <div class="row-events" style="background-color: rgba(45, 47, 49, 1)">
+                @foreach (var Event in Model.Events)
+                {
+                    <div class="card event-card" style="background-color: rgba(45, 47, 49, 1); color: white">
+                        <div class="row g-0">
+                            <div class="col-md-3 event-image-container">
+                                <img src="@Event.ImgPath" alt="Event @Event.Id" class="event-image" style="max-width:99%">
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <div class="event-date" style="background-color: red; border-radius: 5px; width: fit-content; padding: 3px; margin-bottom: 3px">@Event.DateTime.ToShortDateString()</div>
+                                    <span class="event-title">
+                                        <a href="home/event/@Event.Id">@Event.Name</a>
+                                    </span>
+                                    @if (Context.Session.GetString("Login") is not null)
+                                    {
+                                        <div>
+                                            <a asp-controller="constructor" asp-action="event" asp-route-id="@Event.Id" class="btn btn-primary bi bi-pencil-square" style="background-color: red; color: white; border-color: white"></a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="links" style="margin-bottom: 50px">
+                <h3 style="margin-bottom:18px; color: white">
+                    Ссылки
+                </h3>
+                <p><a href="home/about">О сайте</a></p>
+                <p><a href="home/media">Медиа</a></p>
+        </div>
+        </div>
+    </div>
+</div>
